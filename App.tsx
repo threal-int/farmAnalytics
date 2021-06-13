@@ -1,21 +1,40 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
+import {
+	useFonts,
+	Poppins_400Regular,
+	Poppins_600SemiBold,
+	Poppins_700Bold,
+} from '@expo-google-fonts/poppins';
+import AppLoading from 'expo-app-loading';
+import { StatusBar } from 'expo-status-bar';
+
+import Login from './screens/Login';
+import Splash from './screens/Splash';
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+	let [fontsLoaded] = useFonts({
+		Poppins_400Regular,
+		Poppins_600SemiBold,
+		Poppins_700Bold,
+	});
+
+	if (!fontsLoaded) {
+		return <AppLoading />;
+	}
+
+	return (
+		<View style={styles.app}>
+			{/* <StatusBar style="auto" /> */}
+			<Splash />
+			{/* <Login /> */}
+		</View>
+	);
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+	app: {
+		flex: 1,
+		backgroundColor: '#eee',
+	},
 });
