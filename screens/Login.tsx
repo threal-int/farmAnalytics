@@ -1,17 +1,14 @@
 import React, { useState } from 'react';
-import {
-	StyleSheet,
-	View,
-	Text,
-	TouchableWithoutFeedback,
-	Keyboard,
-} from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 //components
 import PrimaryButton from '../components/PrimaryButton';
 import Input from '../components/Input';
 import LoginSvg from '../components/svg/LoginSvg';
 import TopShape from '../components/svg/TopShape';
+import KeyboardWrapper from '../components/KeyboardWrapper';
+import Container from '../components/Container';
+import Paragraph from '../components/Paragraph';
 
 function Login() {
 	const [email, setEmail] = useState('');
@@ -22,11 +19,11 @@ function Login() {
 	};
 
 	return (
-		<TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+		<KeyboardWrapper>
 			<View style={styles.view}>
 				<TopShape />
-				<View style={styles.container}>
-					<Text style={styles.headerText}>Welcome Back!</Text>
+				<Container>
+					<Paragraph type="header">Welcome Back!</Paragraph>
 					<LoginSvg />
 					<Input
 						placeholder="Enter your email"
@@ -36,14 +33,14 @@ function Login() {
 						placeholder="Enter your password"
 						value={(password) => setPassword(password)}
 					/>
-					<Text style={styles.link}>Forgot password?</Text>
+					<Paragraph type="link">Forgot password?</Paragraph>
 					<PrimaryButton value="Login" onPress={onSubmit} />
-					<Text style={styles.text}>
-						Don't have an account? <Text style={styles.link}>Sign up</Text>
-					</Text>
-				</View>
+					<Paragraph type="regular">
+						Don't have an account? <Paragraph type="link">Sign up</Paragraph>
+					</Paragraph>
+				</Container>
 			</View>
-		</TouchableWithoutFeedback>
+		</KeyboardWrapper>
 	);
 }
 
@@ -51,30 +48,6 @@ const styles = StyleSheet.create({
 	view: {
 		flex: 1,
 		alignItems: 'center',
-	},
-	container: {
-		flex: 1,
-		maxWidth: 310,
-		alignItems: 'center',
-		justifyContent: 'space-evenly',
-	},
-	headerText: {
-		fontSize: 18,
-		lineHeight: 27,
-		fontFamily: 'Poppins_600SemiBold',
-		color: '#000',
-	},
-	link: {
-		color: '#b41111',
-		fontFamily: 'Poppins_700Bold',
-		lineHeight: 23.86,
-		fontSize: 13,
-	},
-	text: {
-		color: '#000',
-		fontFamily: 'Poppins_400Regular',
-		lineHeight: 23.86,
-		fontSize: 13,
 	},
 });
 

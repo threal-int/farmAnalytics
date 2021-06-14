@@ -11,6 +11,7 @@ import { StatusBar } from 'expo-status-bar';
 
 import Login from './screens/Login';
 import Splash from './screens/Splash';
+import Register from './screens/Register';
 
 export default function App() {
 	let [fontsLoaded] = useFonts({
@@ -26,8 +27,9 @@ export default function App() {
 	return (
 		<View style={styles.app}>
 			{/* <StatusBar style="auto" /> */}
-			<Splash />
+			{/* <Splash /> */}
 			{/* <Login /> */}
+			<Register />
 		</View>
 	);
 }
