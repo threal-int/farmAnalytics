@@ -9,10 +9,8 @@ import {
 import AppLoading from 'expo-app-loading';
 import { StatusBar } from 'expo-status-bar';
 
-import Login from './screens/LoginOrCreateFarm';
 import Splash from './screens/Splash';
-import Register from './screens/Register';
-import CreateFarm from './screens/CreateFarm';
+import RegisterOrCreateCattle from './screens/RegisterOrCreateCattle';
 import LoginOrCreateFarm from './screens/LoginOrCreateFarm';
 
 export default function App() {
@@ -32,7 +30,8 @@ export default function App() {
 			{/* <Splash /> */}
 			{/* <Login /> */}
 			{/* <Register /> */}
-			<LoginOrCreateFarm type="createFarm" />
+			{/* <LoginOrCreateFarm type="createFarm" /> */}
+			<RegisterOrCreateCattle type="createCattle" />
 		</View>
 	);
 }
