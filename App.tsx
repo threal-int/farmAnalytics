@@ -9,9 +9,11 @@ import {
 import AppLoading from 'expo-app-loading';
 import { StatusBar } from 'expo-status-bar';
 
-import Login from './screens/Login';
+import Login from './screens/LoginOrCreateFarm';
 import Splash from './screens/Splash';
 import Register from './screens/Register';
+import CreateFarm from './screens/CreateFarm';
+import LoginOrCreateFarm from './screens/LoginOrCreateFarm';
 
 export default function App() {
 	let [fontsLoaded] = useFonts({
@@ -29,7 +31,8 @@ export default function App() {
 			{/* <StatusBar style="auto" /> */}
 			{/* <Splash /> */}
 			{/* <Login /> */}
-			<Register />
+			{/* <Register /> */}
+			<LoginOrCreateFarm type="createFarm" />
 		</View>
 	);
 }
