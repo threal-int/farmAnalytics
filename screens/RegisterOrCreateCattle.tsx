@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useReducer } from 'react';
 import { StyleSheet, View } from 'react-native';
 
 //components
@@ -13,22 +13,168 @@ interface Props {
 	type: 'register' | 'createCattle';
 }
 
+interface Register {
+	username: string;
+	email: string;
+	phoneNumber: string;
+	location: string;
+	password: string;
+	confirmPassword: string;
+}
+
+interface CreateCattle {
+	cattleName: string;
+	cattleBreed: string;
+	cattleDOB: string;
+	cattleGender: string;
+	cattleWeight: string;
+	cattlePurchasePrice: string;
+}
+
+interface State {
+	register: Register;
+	createCattle: CreateCattle;
+}
+
+type Action = {
+	type: number;
+	payload: string;
+};
+
+enum Actions {
+	SET_USERNAME,
+	SET_EMAIL,
+	SET_PHONE_NUMBER,
+	SET_LOCATION,
+	SET_PASSWORD,
+	SET_CONFIRM_PASSWORD,
+	SET_CATTLE_NAME,
+	SET_CATTLE_BREED,
+	SET_CATTLE_DOB,
+	SET_CATTLE_GENDER,
+	SET_CATTLE_WEIGHT,
+	SET_CATTLE_PURCHASE_PRICE,
+}
+
+const initialState = {
+	register: {
+		username: '',
+		email: '',
+		phoneNumber: '',
+		location: '',
+		password: '',
+		confirmPassword: '',
+	},
+	createCattle: {
+		cattleName: '',
+		cattleBreed: '',
+		cattleDOB: '',
+		cattleGender: '',
+		cattleWeight: '',
+		cattlePurchasePrice: '',
+	},
+};
+
+function reducer(state: State, action: Action) {
+	switch (action.type) {
+		case Actions.SET_USERNAME:
+			return {
+				...state,
+				register: { ...state.register, username: action.payload },
+			};
+		case Actions.SET_EMAIL:
+			return {
+				...state,
+				register: { ...state.register, email: action.payload },
+			};
+		case Actions.SET_PHONE_NUMBER:
+			return {
+				...state,
+				register: { ...state.register, phoneNumber: action.payload },
+			};
+		case Actions.SET_LOCATION:
+			return {
+				...state,
+				register: { ...state.register, location: action.payload },
+			};
+		case Actions.SET_PASSWORD:
+			return {
+				...state,
+				register: { ...state.register, password: action.payload },
+			};
+		case Actions.SET_CONFIRM_PASSWORD:
+			return {
+				...state,
+				register: { ...state.register, confirmPassword: action.payload },
+			};
+		case Actions.SET_CATTLE_NAME:
+			return {
+				...state,
+				createCattle: { ...state.createCattle, cattleName: action.payload },
+			};
+		case Actions.SET_CATTLE_BREED:
+			return {
+				...state,
+				createCattle: { ...state.createCattle, cattleBreed: action.payload },
+			};
+		case Actions.SET_CATTLE_DOB:
+			return {
+				...state,
+				createCattle: { ...state.createCattle, cattleDOB: action.payload },
+			};
+		case Actions.SET_CATTLE_GENDER:
+			return {
+				...state,
+				createCattle: { ...state.createCattle, cattleGender: action.payload },
+			};
+		case Actions.SET_CATTLE_WEIGHT:
+			return {
+				...state,
+				createCattle: { ...state.createCattle, cattleWeight: action.payload },
+			};
+		case Actions.SET_CATTLE_PURCHASE_PRICE:
+			return {
+				...state,
+				createCattle: {
+					...state.createCattle,
+					cattlePurchasePrice: action.payload,
+				},
+			};
+		default:
+			return state;
+	}
+}
+
 function Register({ type }: Props) {
-	const [usernameOrCattleName, setUsernameOrCattleName] = useState('');
-	const [emailOrCattleBreed, setEmailOrCattleBreed] = useState('');
-	const [phoneNumberOrCattleDOB, setPhoneNumberOrCattleDOB] = useState('');
-	const [locationOrCattleGender, setLocationOrCattleGender] = useState('');
-	const [passwordOrCattleWeight, setPasswordOrCattleWeight] = useState('');
-	const [confirmPasswordOrPurchasePrice, setConfirmPasswordOrPurchasePrice] =
-		useState('');
+	const [
+		{
+			register: {
+				username,
+				email,
+				phoneNumber,
+				location,
+				password,
+				confirmPassword,
+			},
+			createCattle: {
+				cattleName,
+				cattleBreed,
+				cattleDOB,
+				cattleGender,
+				cattleWeight,
+				cattlePurchasePrice,
+			},
+		},
+		dispatch,
+	] = useReducer(reducer, initialState);
 
 	const onSubmit = () => {
 		type === 'register'
 			? alert(
-					`username:${usernameOrCattleName} && email:${emailOrCattleBreed} && phoneNumber:${phoneNumberOrCattleDOB} && location:${locationOrCattleGender} && password:${passwordOrCattleWeight} && confirmPassword:${confirmPasswordOrPurchasePrice}`
+					`username:${username} && email:${email} && phoneNumber:${phoneNumber} && location:${location} && password:${password} && confirmPassword:${confirmPassword}`
 			  )
 			: alert(
-					`CattleName:${usernameOrCattleName} && CattleBreed:${emailOrCattleBreed} && CattleDOB:${phoneNumberOrCattleDOB} && CattleGender:${locationOrCattleGender} && CattleWeight:${passwordOrCattleWeight} && PurchasePrice:${confirmPasswordOrPurchasePrice}`
+					`CattleName:${cattleName} && CattleBreed:${cattleBreed} && CattleDOB:${cattleDOB} && CattleGender:${cattleGender} && CattleWeight:${cattleWeight} && cattlePurchasePrice:${cattlePurchasePrice}`
 			  );
 	};
 
@@ -45,16 +191,30 @@ function Register({ type }: Props) {
 						placeholder={
 							type === 'register' ? 'Enter your username' : 'Enter cattle name'
 						}
-						value={(usernameOrCattleName) =>
-							setUsernameOrCattleName(usernameOrCattleName)
+						value={
+							type === 'register'
+								? (username) =>
+										dispatch({ type: Actions.SET_USERNAME, payload: username })
+								: (cattleName) =>
+										dispatch({
+											type: Actions.SET_CATTLE_NAME,
+											payload: cattleName,
+										})
 						}
 					/>
 					<Input
 						placeholder={
 							type === 'register' ? 'Enter your email' : 'Enter cattle breed'
 						}
-						value={(emailOrCattleBreed) =>
-							setEmailOrCattleBreed(emailOrCattleBreed)
+						value={
+							type === 'register'
+								? (email) =>
+										dispatch({ type: Actions.SET_EMAIL, payload: email })
+								: (cattleBreed) =>
+										dispatch({
+											type: Actions.SET_CATTLE_BREED,
+											payload: cattleBreed,
+										})
 						}
 					/>
 					<Input
@@ -63,8 +223,18 @@ function Register({ type }: Props) {
 								? 'Enter your phone number'
 								: 'Choose cattle date of birth'
 						}
-						value={(phoneNumberOrCattleDOB) =>
-							setPhoneNumberOrCattleDOB(phoneNumberOrCattleDOB)
+						value={
+							type === 'register'
+								? (phoneNumber) =>
+										dispatch({
+											type: Actions.SET_PHONE_NUMBER,
+											payload: phoneNumber,
+										})
+								: (cattleDOB) =>
+										dispatch({
+											type: Actions.SET_CATTLE_DOB,
+											payload: cattleDOB,
+										})
 						}
 					/>
 					<Input
@@ -73,8 +243,15 @@ function Register({ type }: Props) {
 								? 'Choose your location'
 								: ' Choose cattle gender'
 						}
-						value={(locationOrCattleGender) =>
-							setLocationOrCattleGender(locationOrCattleGender)
+						value={
+							type === 'register'
+								? (location) =>
+										dispatch({ type: Actions.SET_LOCATION, payload: location })
+								: (cattleGender) =>
+										dispatch({
+											type: Actions.SET_CATTLE_GENDER,
+											payload: cattleGender,
+										})
 						}
 					/>
 					<Input
@@ -83,8 +260,15 @@ function Register({ type }: Props) {
 								? 'Enter your password'
 								: 'Enter cattle weight'
 						}
-						value={(passwordOrCattleWeight) =>
-							setPasswordOrCattleWeight(passwordOrCattleWeight)
+						value={
+							type === 'register'
+								? (password) =>
+										dispatch({ type: Actions.SET_PASSWORD, payload: password })
+								: (cattleWeight) =>
+										dispatch({
+											type: Actions.SET_CATTLE_WEIGHT,
+											payload: cattleWeight,
+										})
 						}
 					/>
 					<Input
@@ -93,8 +277,18 @@ function Register({ type }: Props) {
 								? 'Confirm your password'
 								: 'Enter cattle purchase price'
 						}
-						value={(confirmPasswordOrPurchasePrice) =>
-							setConfirmPasswordOrPurchasePrice(confirmPasswordOrPurchasePrice)
+						value={
+							type === 'register'
+								? (confirmPassword) =>
+										dispatch({
+											type: Actions.SET_CONFIRM_PASSWORD,
+											payload: confirmPassword,
+										})
+								: (cattlePurchasePrice) =>
+										dispatch({
+											type: Actions.SET_CATTLE_PURCHASE_PRICE,
+											payload: cattlePurchasePrice,
+										})
 						}
 					/>
 

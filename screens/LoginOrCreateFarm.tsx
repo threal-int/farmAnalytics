@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useReducer } from 'react';
 import { StyleSheet, View } from 'react-native';
 
 //components
@@ -15,16 +15,78 @@ interface Props {
 	type: 'login' | 'createFarm';
 }
 
+interface Login {
+	email: string;
+	password: string;
+}
+
+interface CreateFarm {
+	farmName: string;
+	farmingType: string;
+}
+
+interface State {
+	login: Login;
+	createFarm: CreateFarm;
+}
+
+enum Actions {
+	SET_EMAIL,
+	SET_PASSWORD,
+	SET_FARM_NAME,
+	SET_FARMING_TYPE,
+}
+
+type Action = {
+	type: number;
+	payload: string;
+};
+
+const initialState = {
+	login: {
+		email: '',
+		password: '',
+	},
+	createFarm: {
+		farmName: '',
+		farmingType: '',
+	},
+};
+
+function reducer(state: State, action: Action) {
+	switch (action.type) {
+		case Actions.SET_EMAIL:
+			return { ...state, login: { ...state.login, email: action.payload } };
+		case Actions.SET_PASSWORD:
+			return { ...state, login: { ...state.login, password: action.payload } };
+		case Actions.SET_FARM_NAME:
+			return {
+				...state,
+				createFarm: { ...state.createFarm, farmName: action.payload },
+			};
+		case Actions.SET_FARMING_TYPE:
+			return {
+				...state,
+				createFarm: { ...state.createFarm, farmingType: action.payload },
+			};
+		default:
+			return state;
+	}
+}
+
 function LoginOrCreateFarm({ type }: Props) {
-	const [emailOrFarmName, setEmailOrFarmName] = useState('');
-	const [passwordOrFarmingType, setPasswordOrFarmingType] = useState('');
+	const [
+		{
+			login: { email, password },
+			createFarm: { farmName, farmingType },
+		},
+		dispatch,
+	] = useReducer(reducer, initialState);
 
 	const onSubmit = () => {
 		type === 'login'
-			? alert(`email:${emailOrFarmName} && password:${passwordOrFarmingType}`)
-			: alert(
-					`farmName:${emailOrFarmName} && farmingType:${passwordOrFarmingType}`
-			  );
+			? alert(`email:${email} && password:${password}`)
+			: alert(`farmName:${farmName} && farmingType:${farmingType}`);
 	};
 
 	return (
@@ -40,7 +102,19 @@ function LoginOrCreateFarm({ type }: Props) {
 						placeholder={
 							type === 'login' ? 'Enter your email' : ' Enter the farm name'
 						}
-						value={(emailOrFarmName) => setEmailOrFarmName(emailOrFarmName)}
+						value={
+							type === 'login'
+								? (email) =>
+										dispatch({
+											type: Actions.SET_EMAIL,
+											payload: email,
+										})
+								: (farmName) =>
+										dispatch({
+											type: Actions.SET_FARM_NAME,
+											payload: farmName,
+										})
+						}
 					/>
 					<Input
 						placeholder={
@@ -48,8 +122,18 @@ function LoginOrCreateFarm({ type }: Props) {
 								? 'Enter your password'
 								: 'Choose type of farming'
 						}
-						value={(passwordOrFarmingType) =>
-							setPasswordOrFarmingType(passwordOrFarmingType)
+						value={
+							type === 'login'
+								? (password) =>
+										dispatch({
+											type: Actions.SET_PASSWORD,
+											payload: password,
+										})
+								: (farmingType) =>
+										dispatch({
+											type: Actions.SET_FARMING_TYPE,
+											payload: farmingType,
+										})
 						}
 					/>
 					<Paragraph type="link">

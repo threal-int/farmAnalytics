@@ -30,8 +30,8 @@ export default function App() {
 			{/* <Splash /> */}
 			{/* <Login /> */}
 			{/* <Register /> */}
-			{/* <LoginOrCreateFarm type="createFarm" /> */}
-			<RegisterOrCreateCattle type="createCattle" />
+			{/* <LoginOrCreateFarm type="login" /> */}
+			<RegisterOrCreateCattle type="register" />
 		</View>
 	);
 }
