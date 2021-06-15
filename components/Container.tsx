@@ -6,13 +6,13 @@ interface Props {
 }
 
 function Container({ children }: Props) {
-	return <View style={styles.Container}>{children}</View>;
+	return <View style={styles.container}>{children}</View>;
 }
 
 export default Container;
 
 const styles = StyleSheet.create({
-	Container: {
+	container: {
 		flex: 1,
 		maxWidth: 310,
 		alignItems: 'center',

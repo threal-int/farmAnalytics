@@ -6,6 +6,7 @@ import {
 	Poppins_600SemiBold,
 	Poppins_700Bold,
 } from '@expo-google-fonts/poppins';
+import Constants from 'expo-constants';
 import AppLoading from 'expo-app-loading';
 import { StatusBar } from 'expo-status-bar';
 
@@ -26,12 +27,10 @@ export default function App() {
 
 	return (
 		<View style={styles.app}>
-			{/* <StatusBar style="auto" /> */}
+			<StatusBar style="dark" backgroundColor="#eee" animated />
 			{/* <Splash /> */}
-			{/* <Login /> */}
-			{/* <Register /> */}
-			{/* <LoginOrCreateFarm type="login" /> */}
-			<RegisterOrCreateCattle type="register" />
+			<LoginOrCreateFarm type="createFarm" />
+			{/* <RegisterOrCreateCattle type="createCattle" /> */}
 		</View>
 	);
 }
@@ -40,5 +39,6 @@ const styles = StyleSheet.create({
 	app: {
 		flex: 1,
 		backgroundColor: '#eee',
+		marginTop: Constants.statusBarHeight,
 	},
 });

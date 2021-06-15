@@ -8,6 +8,7 @@ import TopShape from '../components/svg/TopShape';
 import KeyboardWrapper from '../components/KeyboardWrapper';
 import Container from '../components/Container';
 import Paragraph from '../components/Paragraph';
+import Select from '../components/Select';
 
 interface Props {
 	type: 'register' | 'createCattle';
@@ -194,7 +195,10 @@ function Register({ type }: Props) {
 						value={
 							type === 'register'
 								? (username) =>
-										dispatch({ type: Actions.SET_USERNAME, payload: username })
+										dispatch({
+											type: Actions.SET_USERNAME,
+											payload: username,
+										})
 								: (cattleName) =>
 										dispatch({
 											type: Actions.SET_CATTLE_NAME,
@@ -237,16 +241,25 @@ function Register({ type }: Props) {
 										})
 						}
 					/>
-					<Input
+
+					<Select
 						placeholder={
 							type === 'register'
 								? 'Choose your location'
-								: ' Choose cattle gender'
+								: 'Choose cattle gender'
+						}
+						items={
+							type === 'register'
+								? ['Uasin Gishu', 'Nairobi']
+								: ['Male', 'Female']
 						}
 						value={
 							type === 'register'
 								? (location) =>
-										dispatch({ type: Actions.SET_LOCATION, payload: location })
+										dispatch({
+											type: Actions.SET_LOCATION,
+											payload: location,
+										})
 								: (cattleGender) =>
 										dispatch({
 											type: Actions.SET_CATTLE_GENDER,
@@ -254,6 +267,7 @@ function Register({ type }: Props) {
 										})
 						}
 					/>
+
 					<Input
 						placeholder={
 							type === 'register'
@@ -263,7 +277,10 @@ function Register({ type }: Props) {
 						value={
 							type === 'register'
 								? (password) =>
-										dispatch({ type: Actions.SET_PASSWORD, payload: password })
+										dispatch({
+											type: Actions.SET_PASSWORD,
+											payload: password,
+										})
 								: (cattleWeight) =>
 										dispatch({
 											type: Actions.SET_CATTLE_WEIGHT,

@@ -10,6 +10,7 @@ import KeyboardWrapper from '../components/KeyboardWrapper';
 import Container from '../components/Container';
 import Paragraph from '../components/Paragraph';
 import CreateFarmSvg from '../components/svg/CreateFarmSvg';
+import Select from '../components/Select';
 
 interface Props {
 	type: 'login' | 'createFarm';
@@ -41,6 +42,8 @@ type Action = {
 	type: number;
 	payload: string;
 };
+
+type items = ['Livestock', 'Crop', 'Mixed'];
 
 const initialState = {
 	login: {
@@ -89,6 +92,8 @@ function LoginOrCreateFarm({ type }: Props) {
 			: alert(`farmName:${farmName} && farmingType:${farmingType}`);
 	};
 
+	const items: items = ['Livestock', 'Crop', 'Mixed'];
+
 	return (
 		<KeyboardWrapper>
 			<View style={styles.view}>
@@ -116,26 +121,29 @@ function LoginOrCreateFarm({ type }: Props) {
 										})
 						}
 					/>
-					<Input
-						placeholder={
-							type === 'login'
-								? 'Enter your password'
-								: 'Choose type of farming'
-						}
-						value={
-							type === 'login'
-								? (password) =>
-										dispatch({
-											type: Actions.SET_PASSWORD,
-											payload: password,
-										})
-								: (farmingType) =>
-										dispatch({
-											type: Actions.SET_FARMING_TYPE,
-											payload: farmingType,
-										})
-						}
-					/>
+					{type === 'login' ? (
+						<Input
+							placeholder="Enter your password"
+							value={(password) =>
+								dispatch({
+									type: Actions.SET_PASSWORD,
+									payload: password,
+								})
+							}
+						/>
+					) : (
+						<Select
+							placeholder="Choose your farming type"
+							items={items}
+							value={(farmingType) =>
+								dispatch({
+									type: Actions.SET_FARMING_TYPE,
+									payload: farmingType,
+								})
+							}
+						/>
+					)}
+
 					<Paragraph type="link">
 						{type === 'login' ? 'Forgot password?' : 'Go back?'}
 					</Paragraph>

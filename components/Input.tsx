@@ -3,28 +3,29 @@ import { StyleSheet, TextInput, View } from 'react-native';
 
 interface Props {
 	placeholder: string;
-	value: (inputValue: string) => void;
+	value: (value: string) => void;
 }
 
 function Input({ placeholder, value }: Props) {
-	const [inputValue, setInputValue] = useState('');
+	const [textValue, setTextValue] = useState('');
 
-	const changeHandler = (inputValue: string) => {
-		setInputValue(inputValue);
+	const changeHandler = (value: string) => {
+		setTextValue(value);
 	};
 
 	useEffect(() => {
-		value(inputValue);
-	}, [inputValue]);
+		value(textValue);
+	}, [textValue]);
 
 	return (
 		<View style={styles.view}>
-			<TextInput
-				placeholder={placeholder}
-				value={inputValue}
-				onChangeText={changeHandler}
-				style={styles.input}
-			/>
+			<View style={styles.input}>
+				<TextInput
+					placeholder={placeholder}
+					value={textValue}
+					onChangeText={changeHandler}
+				/>
+			</View>
 		</View>
 	);
 }
@@ -40,9 +41,10 @@ const styles = StyleSheet.create({
 		height: 36,
 		backgroundColor: '#fff',
 		borderRadius: 100,
-		fontSize: 13,
-		fontFamily: 'Poppins_400Regular',
-		lineHeight: 19.5,
+		// fontSize: 13,
+		// fontFamily: 'Poppins_400Regular',
+		// lineHeight: 19.5,
 		paddingLeft: 13,
+		justifyContent: 'center',
 	},
 });
