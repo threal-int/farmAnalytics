@@ -2,7 +2,7 @@ import React, { useReducer } from 'react';
 import { StyleSheet, View } from 'react-native';
 
 //components
-import PrimaryButton from '../components/PrimaryButton';
+import SecondaryButton from '../components/SecondaryButton';
 import Input from '../components/Input';
 import LoginSvg from '../components/svg/LoginSvg';
 import TopShape from '../components/svg/TopShape';
@@ -11,6 +11,8 @@ import Container from '../components/Container';
 import Paragraph from '../components/Paragraph';
 import CreateFarmSvg from '../components/svg/CreateFarmSvg';
 import Select from '../components/Select';
+
+import Picker from '../components/Picker';
 
 interface Props {
 	type: 'login' | 'createFarm';
@@ -132,7 +134,7 @@ function LoginOrCreateFarm({ type }: Props) {
 							}
 						/>
 					) : (
-						<Select
+						<Picker
 							placeholder="Choose your farming type"
 							items={items}
 							value={(farmingType) =>
@@ -147,7 +149,7 @@ function LoginOrCreateFarm({ type }: Props) {
 					<Paragraph type="link">
 						{type === 'login' ? 'Forgot password?' : 'Go back?'}
 					</Paragraph>
-					<PrimaryButton
+					<SecondaryButton
 						value={type === 'login' ? 'Login' : 'Create'}
 						onPress={onSubmit}
 					/>

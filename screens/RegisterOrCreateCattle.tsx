@@ -2,13 +2,14 @@ import React, { useReducer } from 'react';
 import { StyleSheet, View } from 'react-native';
 
 //components
-import PrimaryButton from '../components/PrimaryButton';
+import SecondaryButton from '../components/SecondaryButton';
 import Input from '../components/Input';
 import TopShape from '../components/svg/TopShape';
 import KeyboardWrapper from '../components/KeyboardWrapper';
 import Container from '../components/Container';
 import Paragraph from '../components/Paragraph';
-import Select from '../components/Select';
+import SelectDateTime from '../components/SelectDateTime';
+import Picker from '../components/Picker';
 
 interface Props {
 	type: 'register' | 'createCattle';
@@ -221,28 +222,29 @@ function Register({ type }: Props) {
 										})
 						}
 					/>
-					<Input
-						placeholder={
-							type === 'register'
-								? 'Enter your phone number'
-								: 'Choose cattle date of birth'
-						}
-						value={
-							type === 'register'
-								? (phoneNumber) =>
-										dispatch({
-											type: Actions.SET_PHONE_NUMBER,
-											payload: phoneNumber,
-										})
-								: (cattleDOB) =>
-										dispatch({
-											type: Actions.SET_CATTLE_DOB,
-											payload: cattleDOB,
-										})
-						}
-					/>
+					{type === 'register' ? (
+						<Input
+							placeholder="Enter your phone number"
+							value={(phoneNumber) =>
+								dispatch({
+									type: Actions.SET_PHONE_NUMBER,
+									payload: phoneNumber,
+								})
+							}
+						/>
+					) : (
+						<SelectDateTime
+							value={(cattleDOB: any) =>
+								dispatch({
+									type: Actions.SET_CATTLE_DOB,
+									payload: cattleDOB,
+								})
+							}
+							placeholder="Choose cattle date of birth"
+						/>
+					)}
 
-					<Select
+					<Picker
 						placeholder={
 							type === 'register'
 								? 'Choose your location'
@@ -309,7 +311,7 @@ function Register({ type }: Props) {
 						}
 					/>
 
-					<PrimaryButton
+					<SecondaryButton
 						value={type === 'register' ? 'Register' : 'Create'}
 						onPress={onSubmit}
 					/>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import PrimaryButton from '../components/PrimaryButton';
+import SecondaryButton from '../components/SecondaryButton';
 import SplashShape from '../components/svg/SplashShape';
 import SplashSvg from '../components/svg/SplashSvg';
 
@@ -19,7 +19,7 @@ function Splash() {
 					egestas ut suspendisse vitae mauris egestas luctus pretium bibendum.
 					In diam etiam habitasse mattis.
 				</Text>
-				<PrimaryButton
+				<SecondaryButton
 					value="Get Started"
 					onPress={() => alert('Getting Started...')}
 				/>
