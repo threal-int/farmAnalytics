@@ -1,21 +1,32 @@
 import React, { useReducer } from 'react';
 import { StyleSheet, View } from 'react-native';
 
+//navigation
+import { StackNavigationProp } from '@react-navigation/stack';
+
 //components
 import SecondaryButton from '../components/SecondaryButton';
 import Input from '../components/Input';
 import LoginSvg from '../components/svg/LoginSvg';
-import TopShape from '../components/svg/TopShape';
 import KeyboardWrapper from '../components/KeyboardWrapper';
 import Container from '../components/Container';
 import Paragraph from '../components/Paragraph';
 import CreateFarmSvg from '../components/svg/CreateFarmSvg';
-import Select from '../components/Select';
-
 import Picker from '../components/Picker';
+import FormFooter from '../components/FormFooter';
+import Link from '../components/Link';
+
+type RootStackParamList = {
+	Splash: undefined;
+	Register: undefined;
+	Login: undefined;
+};
+
+type screenNavigationProp = StackNavigationProp<RootStackParamList, 'Register'>;
 
 interface Props {
 	type: 'login' | 'createFarm';
+	navigation: screenNavigationProp;
 }
 
 interface Login {
@@ -79,7 +90,7 @@ function reducer(state: State, action: Action) {
 	}
 }
 
-function LoginOrCreateFarm({ type }: Props) {
+function LoginOrCreateFarm({ type, navigation }: Props) {
 	const [
 		{
 			login: { email, password },
@@ -99,7 +110,6 @@ function LoginOrCreateFarm({ type }: Props) {
 	return (
 		<KeyboardWrapper>
 			<View style={styles.view}>
-				<TopShape />
 				<Container>
 					<Paragraph type="header">
 						{type === 'login' ? 'Welcome Back!' : 'Create your farm?'}
@@ -145,19 +155,20 @@ function LoginOrCreateFarm({ type }: Props) {
 							}
 						/>
 					)}
+					{type === 'login' && (
+						<Link onPress={() => alert('inafanya usitense...')}>
+							Forgot password?
+						</Link>
+					)}
 
-					<Paragraph type="link">
-						{type === 'login' ? 'Forgot password?' : 'Go back?'}
-					</Paragraph>
 					<SecondaryButton
 						value={type === 'login' ? 'Login' : 'Create'}
 						onPress={onSubmit}
 					/>
-					{type === 'login' && (
-						<Paragraph type="regular">
-							Don't have an account? <Paragraph type="link">Sign up</Paragraph>
-						</Paragraph>
-					)}
+					<FormFooter
+						type={type === 'login' ? 'login' : 'default'}
+						pressHandler={() => navigation.goBack()}
+					/>
 				</Container>
 			</View>
 		</KeyboardWrapper>

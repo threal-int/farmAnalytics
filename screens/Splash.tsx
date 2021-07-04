@@ -4,7 +4,7 @@ import SecondaryButton from '../components/SecondaryButton';
 import SplashShape from '../components/svg/SplashShape';
 import SplashSvg from '../components/svg/SplashSvg';
 
-function Splash() {
+function Splash({ navigation }: any) {
 	return (
 		<View style={styles.view}>
 			<View style={styles.svg}>
@@ -21,7 +21,7 @@ function Splash() {
 				</Text>
 				<SecondaryButton
 					value="Get Started"
-					onPress={() => alert('Getting Started...')}
+					onPress={() => navigation.navigate('Register')}
 				/>
 			</View>
 		</View>

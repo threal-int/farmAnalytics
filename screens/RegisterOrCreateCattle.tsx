@@ -1,18 +1,30 @@
 import React, { useReducer } from 'react';
 import { StyleSheet, View } from 'react-native';
 
+//navigation
+import { StackNavigationProp } from '@react-navigation/stack';
+
 //components
 import SecondaryButton from '../components/SecondaryButton';
 import Input from '../components/Input';
-import TopShape from '../components/svg/TopShape';
 import KeyboardWrapper from '../components/KeyboardWrapper';
 import Container from '../components/Container';
 import Paragraph from '../components/Paragraph';
 import SelectDateTime from '../components/SelectDateTime';
 import Picker from '../components/Picker';
+import FormFooter from '../components/FormFooter';
+
+type RootStackParamList = {
+	Splash: undefined;
+	Register: undefined;
+	Login: undefined;
+};
+
+type screenNavigationProp = StackNavigationProp<RootStackParamList, 'Register'>;
 
 interface Props {
 	type: 'register' | 'createCattle';
+	navigation: screenNavigationProp;
 }
 
 interface Register {
@@ -147,7 +159,7 @@ function reducer(state: State, action: Action) {
 	}
 }
 
-function Register({ type }: Props) {
+function Register({ type, navigation }: Props) {
 	const [
 		{
 			register: {
@@ -183,7 +195,6 @@ function Register({ type }: Props) {
 	return (
 		<KeyboardWrapper>
 			<View style={styles.view}>
-				<TopShape />
 				<Container>
 					<Paragraph type="header">
 						{type === 'register' ? 'Sign up to get started!' : 'Create Cattle?'}
@@ -315,12 +326,14 @@ function Register({ type }: Props) {
 						value={type === 'register' ? 'Register' : 'Create'}
 						onPress={onSubmit}
 					/>
-					<Paragraph type="regular">
-						{type === 'register' && 'Already have an account?'}{' '}
-						<Paragraph type="link">
-							{type === 'register' ? 'Sign in' : 'Go back?'}
-						</Paragraph>
-					</Paragraph>
+					<FormFooter
+						type={type === 'register' ? 'register' : 'default'}
+						pressHandler={() =>
+							type === 'register'
+								? navigation.navigate('Login')
+								: navigation.navigate('Register')
+						}
+					/>
 				</Container>
 			</View>
 		</KeyboardWrapper>
